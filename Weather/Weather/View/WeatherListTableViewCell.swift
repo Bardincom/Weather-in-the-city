@@ -6,22 +6,27 @@
 //
 
 import UIKit
+import MapKit
 
-class WeatherListTableViewCell: UITableViewCell {
+final class WeatherListTableViewCell: UITableViewCell {
 
-    @IBOutlet var city: UILabel!
-    @IBOutlet var temperature: UILabel!
-    @IBOutlet var conditionImage: UIImageView!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    @IBOutlet var city: UILabel! {
+        willSet {
+            newValue.font = Fonts.labelFont
+        }
+    }
+    
+    @IBOutlet var temperature: UILabel! {
+        willSet {
+            newValue.font = Fonts.labelFont
+        }
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    @IBOutlet var conditionImage: UIImageView!
 
-        // Configure the view for the selected state
+
+    func displayResult(_ result: MKLocalSearchCompletion) {
+            city.text = String(result.title.prefix(while: { $0 != "," }))
     }
     
 }

@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class WeatherListViewController: UIViewController {
+final class WeatherListViewController: UIViewController {
 
     @IBOutlet var weatherListTableView: UITableView! {
         willSet {
@@ -26,39 +26,43 @@ class WeatherListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        searchCompleterConfiguration()
+        searchControllerConfiguration()
+    }
+
+    func searchControllerConfiguration() {
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = Title.weatherViewControllerTitle
+        navigationItem.searchController = searchController
+    }
+
+    func searchCompleterConfiguration() {
         searchCompleter.delegate = self
         searchCompleter.pointOfInterestFilter = .excludingAll
-
-        searchController.searchBar.delegate = self
-        
-        //        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search"
-        navigationItem.searchController = searchController
     }
 }
 
 extension WeatherListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchController.isActive {
-            print("searchResults: \(searchResults.count)")
             return searchResults.count
         }
 
-        print("selectedResults: \(selectedResults.count)")
         return selectedResults.count
-
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(reusable: WeatherListTableViewCell.self, for: indexPath)
         let result: MKLocalSearchCompletion
+
         if searchController.isActive {
             result = searchResults[indexPath.row]
-            cell.city.text = result.title
+            cell.displayResult(result)
         } else {
             result = selectedResults[indexPath.row]
-            cell.city.text = String(result.title.prefix(while: { $0 != "," }))
+            print(result)
+            cell.displayResult(result)
         }
 
         return cell
@@ -71,11 +75,9 @@ extension WeatherListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
         if searchController.isActive {
-            print(searchController.isActive)
             let completion = searchResults[indexPath.row]
             selectedResults.append(completion)
             searchController.isActive = !searchController.isActive
-            print(searchController.isActive)
             tableView.reloadData()
             return
         }
@@ -85,24 +87,20 @@ extension WeatherListViewController: UITableViewDelegate {
         let search = MKLocalSearch(request: searchRequest)
         search.start { (response, error) in
             let info = response?.mapItems.first?.placemark
-
+            print(String(describing: info?.coordinate.latitude))
+            print(String(describing: info?.coordinate.longitude))
             print(String(describing: info?.title))
-
         }
     }
-
 }
 
 extension WeatherListViewController: UISearchBarDelegate {
-
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchCompleter.queryFragment = searchText
     }
-
 }
 
 extension WeatherListViewController: MKLocalSearchCompleterDelegate {
-
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         let results = completer.results.filter { result in
             guard result.title.contains(",") else { return false }
@@ -112,10 +110,5 @@ extension WeatherListViewController: MKLocalSearchCompleterDelegate {
         searchResults = results
         weatherListTableView.reloadData()
     }
-
-    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        // handle error
-    }
-
 }
 
