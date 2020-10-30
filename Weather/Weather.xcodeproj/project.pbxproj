@@ -8,20 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		A2FED64E254BF60E00226C3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED64D254BF60E00226C3E /* AppDelegate.swift */; };
-		A2FED652254BF60E00226C3E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED651254BF60E00226C3E /* ViewController.swift */; };
 		A2FED657254BF61100226C3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2FED656254BF61100226C3E /* Assets.xcassets */; };
 		A2FED65A254BF61100226C3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2FED658254BF61100226C3E /* LaunchScreen.storyboard */; };
 		A2FED663254BF64200226C3E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A2FED662254BF64200226C3E /* .gitignore */; };
+		A2FED66E254BFCFD00226C3E /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED66D254BFCFD00226C3E /* UITableView+Extension.swift */; };
+		A2FED677254C00E800226C3E /* WeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED675254C00E800226C3E /* WeatherListViewController.swift */; };
+		A2FED678254C00E800226C3E /* WeatherListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2FED676254C00E800226C3E /* WeatherListViewController.xib */; };
+		A2FED681254C02B300226C3E /* WeatherListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED67F254C02B300226C3E /* WeatherListTableViewCell.swift */; };
+		A2FED682254C02B300226C3E /* WeatherListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2FED680254C02B300226C3E /* WeatherListTableViewCell.xib */; };
+		A2FED686254C065B00226C3E /* Constanst.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED685254C065B00226C3E /* Constanst.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A2FED64A254BF60E00226C3E /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2FED64D254BF60E00226C3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A2FED651254BF60E00226C3E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A2FED656254BF61100226C3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2FED659254BF61100226C3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A2FED65B254BF61100226C3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2FED662254BF64200226C3E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		A2FED66D254BFCFD00226C3E /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		A2FED675254C00E800226C3E /* WeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewController.swift; sourceTree = "<group>"; };
+		A2FED676254C00E800226C3E /* WeatherListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherListViewController.xib; sourceTree = "<group>"; };
+		A2FED67F254C02B300226C3E /* WeatherListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListTableViewCell.swift; sourceTree = "<group>"; };
+		A2FED680254C02B300226C3E /* WeatherListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherListTableViewCell.xib; sourceTree = "<group>"; };
+		A2FED685254C065B00226C3E /* Constanst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constanst.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,12 +68,65 @@
 			isa = PBXGroup;
 			children = (
 				A2FED64D254BF60E00226C3E /* AppDelegate.swift */,
-				A2FED651254BF60E00226C3E /* ViewController.swift */,
+				A2FED67C254C01EE00226C3E /* View */,
+				A2FED67A254C019B00226C3E /* ViewController */,
+				A2FED66C254BFCC900226C3E /* Helpers */,
+				A2FED670254BFD3900226C3E /* Resources */,
+				A2FED671254BFD6900226C3E /* SupportingFiles */,
+			);
+			path = Weather;
+			sourceTree = "<group>";
+		};
+		A2FED66C254BFCC900226C3E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				A2FED66D254BFCFD00226C3E /* UITableView+Extension.swift */,
+				A2FED685254C065B00226C3E /* Constanst.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		A2FED670254BFD3900226C3E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				A2FED656254BF61100226C3E /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A2FED671254BFD6900226C3E /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
 				A2FED658254BF61100226C3E /* LaunchScreen.storyboard */,
 				A2FED65B254BF61100226C3E /* Info.plist */,
 			);
-			path = Weather;
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		A2FED67A254C019B00226C3E /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A2FED67D254C021600226C3E /* WeatherListViewController */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A2FED67C254C01EE00226C3E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A2FED67F254C02B300226C3E /* WeatherListTableViewCell.swift */,
+				A2FED680254C02B300226C3E /* WeatherListTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A2FED67D254C021600226C3E /* WeatherListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A2FED675254C00E800226C3E /* WeatherListViewController.swift */,
+				A2FED676254C00E800226C3E /* WeatherListViewController.xib */,
+			);
+			name = WeatherListViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,7 +188,9 @@
 			files = (
 				A2FED663254BF64200226C3E /* .gitignore in Resources */,
 				A2FED65A254BF61100226C3E /* LaunchScreen.storyboard in Resources */,
+				A2FED678254C00E800226C3E /* WeatherListViewController.xib in Resources */,
 				A2FED657254BF61100226C3E /* Assets.xcassets in Resources */,
+				A2FED682254C02B300226C3E /* WeatherListTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,8 +201,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2FED652254BF60E00226C3E /* ViewController.swift in Sources */,
 				A2FED64E254BF60E00226C3E /* AppDelegate.swift in Sources */,
+				A2FED677254C00E800226C3E /* WeatherListViewController.swift in Sources */,
+				A2FED686254C065B00226C3E /* Constanst.swift in Sources */,
+				A2FED66E254BFCFD00226C3E /* UITableView+Extension.swift in Sources */,
+				A2FED681254C02B300226C3E /* WeatherListTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +346,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GY47Z2W3K9;
-				INFOPLIST_FILE = Weather/Info.plist;
+				INFOPLIST_FILE = Weather/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -298,7 +366,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GY47Z2W3K9;
-				INFOPLIST_FILE = Weather/Info.plist;
+				INFOPLIST_FILE = Weather/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

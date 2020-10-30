@@ -26,9 +26,10 @@ private extension AppDelegate {
     func assembly() {
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        let rootViewController = ViewController()
-        window?.rootViewController = rootViewController
+        let rootViewController = WeatherListViewController()
+        rootViewController.title = Title.weatherViewControllerTitle
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 }
-
