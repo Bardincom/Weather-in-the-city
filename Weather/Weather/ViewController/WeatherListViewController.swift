@@ -19,7 +19,6 @@ final class WeatherListViewController: UIViewController {
 
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
-//    var selectedResults = [MKLocalSearchCompletion]()
     var citiesInformation = [CityInfo]()
 
     private let searchController = UISearchController(searchResultsController: nil)
@@ -60,18 +59,30 @@ extension WeatherListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(reusable: WeatherListTableViewCell.self, for: indexPath)
-//        let result: MKLocalSearchCompletion
 
         if searchController.isActive {
             let result = searchResults[indexPath.row]
             cell.displayResultSearchCities(result)
         } else {
             let city = citiesInformation[indexPath.row]
-//            print(city)
             cell.displayFavoriteCity(city)
         }
 
         return cell
+    }
+
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        let city = citiesInformation[indexPath.row]
+
+      if editingStyle == .delete {
+        guard let index = citiesInformation.firstIndex(where: { (removeCity) -> Bool in
+            removeCity.name == city.name
+        }) else { return }
+        citiesInformation.remove(at: index)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+      }
     }
 }
 
@@ -96,9 +107,9 @@ extension WeatherListViewController: UITableViewDelegate {
         cityWeatherViewController.cityInfo = selectCity
         cityWeatherViewController.delegate = self
         navigationController?.pushViewController(cityWeatherViewController, animated: true)
-
-
     }
+
+
 }
 
 extension WeatherListViewController: UISearchBarDelegate {
@@ -121,20 +132,15 @@ extension WeatherListViewController: MKLocalSearchCompleterDelegate {
 
 extension WeatherListViewController: CityWeatherDelegate {
     func removeFavouritesCity(_ city: CityInfo) {
-        print("1", citiesInformation.count)
         guard let index = citiesInformation.firstIndex(where: { (removeCity) -> Bool in
             removeCity.name == city.name
         }) else { return }
 
         citiesInformation.remove(at: index)
-        print("2", citiesInformation.count)
-
-
     }
 
     func addFavouritesCity(_ city: CityInfo) {
         citiesInformation.append(city)
-//        print(citiesInformation.count)
     }
 }
 

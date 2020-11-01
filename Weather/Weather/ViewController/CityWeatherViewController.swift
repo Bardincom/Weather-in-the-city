@@ -75,9 +75,10 @@ class CityWeatherViewController: UIViewController {
 private extension CityWeatherViewController {
 
     func setupCityWeather() {
-        isAddedCity = !isAddedCity
 
         guard let cityInfo = cityInfo else { return }
+
+        isAddedCity = cityInfo.isFavorite
 
         let latitude = String(cityInfo.coordinate.latitude)
         let longitude = String(cityInfo.coordinate.longitude)
@@ -121,15 +122,20 @@ private extension CityWeatherViewController {
 
     @objc
     func addCity() {
-        guard let location = location else { return }
+        guard let location = location else {
+            print("Не удаеется зайти")
+            guard let cityInfo = cityInfo else { return }
+            delegate?.removeFavouritesCity(cityInfo)
+            favoriteButton.image = Icon.favorite
+            return }
 
         if !isAddedCity {
             favoriteButton.image = Icon.addedFavorite
-//            isAddedCity = !isAddedCity
         } else {
             favoriteButton.image = Icon.favorite
-            isAddedCity = !isAddedCity
         }
+
+        isAddedCity = !isAddedCity
 
         getLocation(location) { location in
 
@@ -169,8 +175,6 @@ private extension CityWeatherViewController {
                         if self.isAddedCity {
                             delegate.addFavouritesCity(city)
                         } else {
-                            print("уже добавлен")
-                            self.favoriteButton.image = Icon.favorite
                             delegate.removeFavouritesCity(city)
                         }
 
