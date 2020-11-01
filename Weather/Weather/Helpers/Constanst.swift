@@ -8,7 +8,7 @@
 import UIKit
 
 enum Title {
-    static let weatherViewControllerTitle = "Weather"
+    static let weatherViewControllerTitle = "Погода"
 }
 
 enum Text {

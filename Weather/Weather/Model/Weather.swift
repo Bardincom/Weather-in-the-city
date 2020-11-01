@@ -9,8 +9,10 @@ import Foundation
 
 struct WeatherModel: Codable {
     var actualWeather: ActualWeather
+    var coordinate: Coordinate
 
     enum CodingKeys: String, CodingKey {
         case actualWeather = "fact"
+        case coordinate = "info"
     }
 }

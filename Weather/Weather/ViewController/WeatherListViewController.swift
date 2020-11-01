@@ -19,7 +19,8 @@ final class WeatherListViewController: UIViewController {
 
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
-    var selectedResults = [MKLocalSearchCompletion]()
+//    var selectedResults = [MKLocalSearchCompletion]()
+    var citiesInformation = [CityInfo]()
 
     private let searchController = UISearchController(searchResultsController: nil)
 
@@ -28,6 +29,11 @@ final class WeatherListViewController: UIViewController {
 
         searchCompleterConfiguration()
         searchControllerConfiguration()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        weatherListTableView.reloadData()
     }
 
     func searchControllerConfiguration() {
@@ -49,20 +55,20 @@ extension WeatherListViewController: UITableViewDataSource {
             return searchResults.count
         }
 
-        return selectedResults.count
+        return citiesInformation.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(reusable: WeatherListTableViewCell.self, for: indexPath)
-        let result: MKLocalSearchCompletion
+//        let result: MKLocalSearchCompletion
 
         if searchController.isActive {
-            result = searchResults[indexPath.row]
-            cell.displayResult(result)
+            let result = searchResults[indexPath.row]
+            cell.displayResultSearchCities(result)
         } else {
-            result = selectedResults[indexPath.row]
-            print(result)
-            cell.displayResult(result)
+            let city = citiesInformation[indexPath.row]
+//            print(city)
+            cell.displayFavoriteCity(city)
         }
 
         return cell
@@ -74,23 +80,24 @@ extension WeatherListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
+        let cityWeatherViewController = CityWeatherViewController()
+
         if searchController.isActive {
             let completion = searchResults[indexPath.row]
-            selectedResults.append(completion)
+            cityWeatherViewController.location = completion
+            cityWeatherViewController.delegate = self
+            navigationController?.pushViewController(cityWeatherViewController, animated: true)
             searchController.isActive = !searchController.isActive
             tableView.reloadData()
             return
         }
 
-        let completion = selectedResults[indexPath.row]
-        let searchRequest = MKLocalSearch.Request(completion: completion)
-        let search = MKLocalSearch(request: searchRequest)
-        search.start { (response, error) in
-            let info = response?.mapItems.first?.placemark
-            print(String(describing: info?.coordinate.latitude))
-            print(String(describing: info?.coordinate.longitude))
-            print(String(describing: info?.title))
-        }
+        let selectCity = citiesInformation[indexPath.row]
+        cityWeatherViewController.cityInfo = selectCity
+        cityWeatherViewController.delegate = self
+        navigationController?.pushViewController(cityWeatherViewController, animated: true)
+
+
     }
 }
 
@@ -109,6 +116,25 @@ extension WeatherListViewController: MKLocalSearchCompleterDelegate {
 
         searchResults = results
         weatherListTableView.reloadData()
+    }
+}
+
+extension WeatherListViewController: CityWeatherDelegate {
+    func removeFavouritesCity(_ city: CityInfo) {
+        print("1", citiesInformation.count)
+        guard let index = citiesInformation.firstIndex(where: { (removeCity) -> Bool in
+            removeCity.name == city.name
+        }) else { return }
+
+        citiesInformation.remove(at: index)
+        print("2", citiesInformation.count)
+
+
+    }
+
+    func addFavouritesCity(_ city: CityInfo) {
+        citiesInformation.append(city)
+//        print(citiesInformation.count)
     }
 }
 
