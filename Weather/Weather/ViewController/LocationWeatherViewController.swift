@@ -1,5 +1,5 @@
 //
-//  CityWeatherViewController.swift
+//  LocationWeatherViewController.swift
 //  Weather
 //
 //  Created by Aleksey Bardin on 31.10.2020.
@@ -8,12 +8,12 @@
 import UIKit
 import MapKit
 
-protocol CityWeatherDelegate: class {
+protocol LocationWeatherDelegate: class {
     func addFavouritesLocation(_ city: Location)
     func removeFavouritesLocation(_ city: Location)
 }
 
-class CityWeatherViewController: UIViewController {
+class LocationWeatherViewController: UIViewController {
 
     // MARK: - IBOutlets
 
@@ -33,7 +33,7 @@ class CityWeatherViewController: UIViewController {
 
     public var location: MKLocalSearchCompletion?
     public var locationInfo: Location?
-    public weak var delegate: CityWeatherDelegate?
+    public weak var delegate: LocationWeatherDelegate?
 
     // MARK: - Lifecycle
 
@@ -79,7 +79,7 @@ class CityWeatherViewController: UIViewController {
 
 // MARK: - Private Methods
 
-private extension CityWeatherViewController {
+private extension LocationWeatherViewController {
 
     func setupCityWeather() {
 

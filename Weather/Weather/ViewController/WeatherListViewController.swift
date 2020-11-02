@@ -86,7 +86,7 @@ extension WeatherListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let cityWeatherViewController = CityWeatherViewController()
+        let cityWeatherViewController = LocationWeatherViewController()
 
         if searchController.isActive {
             let completion = searchResults[indexPath.row]
@@ -98,8 +98,8 @@ extension WeatherListViewController: UITableViewDelegate {
             return
         }
 
-        let selectCity = favoriteLocations[indexPath.row]
-        cityWeatherViewController.locationInfo = selectCity
+        let selectLocation = favoriteLocations[indexPath.row]
+        cityWeatherViewController.locationInfo = selectLocation
         cityWeatherViewController.delegate = self
         navigationController?.pushViewController(cityWeatherViewController, animated: true)
     }
@@ -123,9 +123,9 @@ extension WeatherListViewController: MKLocalSearchCompleterDelegate {
     }
 }
 
-// MARK: - CityWeatherDelegate
+// MARK: - LocationWeatherDelegate
 
-extension WeatherListViewController: CityWeatherDelegate {
+extension WeatherListViewController: LocationWeatherDelegate {
     func removeFavouritesLocation(_ location: Location) {
         guard let index = favoriteLocations.firstIndex(where: { (removeLocation) -> Bool in
             removeLocation == location
