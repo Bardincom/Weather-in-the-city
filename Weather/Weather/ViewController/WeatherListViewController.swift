@@ -57,8 +57,8 @@ extension WeatherListViewController: UITableViewDataSource {
             let result = searchResults[indexPath.row]
             cell.displayResultSearchLocation(result)
         } else {
-            let city = favoriteLocations[indexPath.row]
-            cell.displayFavoriteLocation(city)
+            let location = favoriteLocations[indexPath.row]
+            cell.displayFavoriteLocation(location)
         }
 
         return cell
@@ -145,7 +145,7 @@ private extension WeatherListViewController {
     func searchControllerConfiguration() {
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = Title.weatherViewControllerTitle
+        searchController.searchBar.placeholder = Text.searchBarPlaceholder
         navigationItem.searchController = searchController
     }
 

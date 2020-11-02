@@ -20,7 +20,7 @@ final class URLComponentsService: URLComponentsProtocol {
         urlComponents.path = URLComponent.path
         urlComponents.queryItems = [
             URLQueryItem(name: QueryItems.latitude, value: "\(latitude)"),
-          URLQueryItem(name: QueryItems.longitude, value: "\(longitude)"),
+            URLQueryItem(name: QueryItems.longitude, value: "\(longitude)"),
         ]
         
         return urlComponents

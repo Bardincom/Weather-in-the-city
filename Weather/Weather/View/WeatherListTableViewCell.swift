@@ -10,30 +10,35 @@ import MapKit
 
 final class WeatherListTableViewCell: UITableViewCell {
 
-    @IBOutlet var city: UILabel! {
+    @IBOutlet private var location: UILabel! {
         willSet {
             newValue.font = Fonts.labelFont
         }
     }
     
-    @IBOutlet var temperature: UILabel! {
+    @IBOutlet private var temperature: UILabel! {
         willSet {
             newValue.font = Fonts.labelFont
         }
     }
 
-    @IBOutlet var conditionImage: UIImageView!
+    @IBOutlet private var conditionImage: UIImageView!
+
+    private let urlIcon = URLIconWeather()
 
     func displayFavoriteLocation(_ favoriteLocation: Location) {
         temperature.isHidden = false
         conditionImage.isHidden = false
 
-        city.text = favoriteLocation.name
-        temperature.text = String(favoriteLocation.actualWeather.temperature)
+        location.text = favoriteLocation.name
+        temperature.text = String(favoriteLocation.actualWeather.temperature) + Text.degrees
+
+        guard let url = urlIcon.preparationURL(favoriteLocation.actualWeather.iconWeather) else { return }
+        conditionImage.kf.setImage(with: url)
     }
 
     func displayResultSearchLocation(_ result: MKLocalSearchCompletion) {
-        city.text = String(result.title)
+        location.text = String(result.title)
         temperature.isHidden = true
         conditionImage.isHidden = true
     }

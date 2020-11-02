@@ -27,6 +27,7 @@ class LocationWeatherViewController: UIViewController {
     private var favoriteButton: UIBarButtonItem!
     private let networkService = NetworkService()
     private let locationService = LocationService()
+    private let urlIcon = URLIconWeather()
     private var isAddedCity: Bool = false
 
     // MARK: - Public Properties
@@ -60,12 +61,32 @@ class LocationWeatherViewController: UIViewController {
 
             self.networkService.getRequest().getActualWeather(latitude, longitude) { [weak self] result in
                 guard let self = self else { return }
+
+                let loadDataGroup = DispatchGroup()
+
                 switch result {
                     case .success(let weather):
-                        DispatchQueue.main.async {
-                            self.temperature.text = String(weather.actualWeather.temperature)
-                            self.feelsTemperature.text = String(weather.actualWeather.feelsTemperature)
-                            self.condition.text = Conditions.init(String(weather.actualWeather.condition))?.description
+
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            loadDataGroup.enter()
+
+                            let locationTemperature = String(weather.actualWeather.temperature) + Text.degrees
+                            let locationFeelsTemperature = Text.feels + String(weather.actualWeather.feelsTemperature) + Text.degrees
+                            let locationCondition = Conditions.init(String(weather.actualWeather.condition))?.description
+                            let icon = weather.actualWeather.iconWeather
+
+                            loadDataGroup.leave()
+
+                            guard let url = self.urlIcon.preparationURL(icon) else {
+                                return
+                            }
+
+                            loadDataGroup.notify(queue: .main) {
+                                self.temperature.text = locationTemperature
+                                self.feelsTemperature.text = locationFeelsTemperature
+                                self.condition.text = locationCondition
+                                self.icon.kf.setImage(with: url)
+                            }
                         }
 
                     case .failure(let error):
@@ -94,12 +115,30 @@ private extension LocationWeatherViewController {
 
             guard let self = self else { return }
 
+            let loadDataGroup = DispatchGroup()
+
             switch result {
                 case .success(let weather):
-                    DispatchQueue.main.async {
-                        self.temperature.text = String(weather.actualWeather.temperature)
-                        self.feelsTemperature.text = String(weather.actualWeather.feelsTemperature)
-                        self.condition.text = Conditions.init(String(weather.actualWeather.condition))?.description
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        loadDataGroup.enter()
+
+                        let locationTemperature = String(weather.actualWeather.temperature) + Text.degrees
+                        let locationFeelsTemperature = Text.feels + String(weather.actualWeather.feelsTemperature) + Text.degrees
+                        let locationCondition = Conditions.init(String(weather.actualWeather.condition))?.description
+                        let icon = weather.actualWeather.iconWeather
+
+                        loadDataGroup.leave()
+
+                        guard let url = self.urlIcon.preparationURL(icon) else {
+                            return
+                        }
+
+                        loadDataGroup.notify(queue: .main) {
+                            self.temperature.text = locationTemperature
+                            self.feelsTemperature.text = locationFeelsTemperature
+                            self.condition.text = locationCondition
+                            self.icon.kf.setImage(with: url)
+                        }
                     }
 
                 case .failure(let error):
@@ -138,8 +177,8 @@ private extension LocationWeatherViewController {
                     case .success(let weather):
 
                         let location = self.locationService.createLocation(locationName,
-                                                           weather,
-                                                           location)
+                                                                           weather,
+                                                                           location)
 
                         if self.isAddedCity {
                             delegate.addFavouritesLocation(location)

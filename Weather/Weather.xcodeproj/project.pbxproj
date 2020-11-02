@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A2C283BC25506AD8001F957A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A2C283BB25506AD8001F957A /* Kingfisher */; };
+		A2C283C12550C0A5001F957A /* URLIconWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C283C02550C0A5001F957A /* URLIconWeather.swift */; };
 		A2FED64E254BF60E00226C3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED64D254BF60E00226C3E /* AppDelegate.swift */; };
 		A2FED657254BF61100226C3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2FED656254BF61100226C3E /* Assets.xcassets */; };
 		A2FED65A254BF61100226C3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2FED658254BF61100226C3E /* LaunchScreen.storyboard */; };
@@ -38,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A2C283C02550C0A5001F957A /* URLIconWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLIconWeather.swift; sourceTree = "<group>"; };
 		A2FED64A254BF60E00226C3E /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2FED64D254BF60E00226C3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2FED656254BF61100226C3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -75,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2C283BC25506AD8001F957A /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +198,7 @@
 				A2FED6B0254DC13700226C3E /* RequestService.swift */,
 				A2FED6B3254DC31100226C3E /* DataTaskService.swift */,
 				A2FED6B9254DCABC00226C3E /* GETService.swift */,
+				A2C283C02550C0A5001F957A /* URLIconWeather.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -231,6 +236,9 @@
 			dependencies = (
 			);
 			name = Weather;
+			packageProductDependencies = (
+				A2C283BB25506AD8001F957A /* Kingfisher */,
+			);
 			productName = Weather;
 			productReference = A2FED64A254BF60E00226C3E /* Weather.app */;
 			productType = "com.apple.product-type.application";
@@ -258,6 +266,9 @@
 				Base,
 			);
 			mainGroup = A2FED641254BF60E00226C3E;
+			packageReferences = (
+				A2C283BA25506AD8001F957A /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = A2FED64B254BF60E00226C3E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -300,6 +311,7 @@
 				A2FED6B7254DC47800226C3E /* Blocks.swift in Sources */,
 				A2FED677254C00E800226C3E /* WeatherListViewController.swift in Sources */,
 				A2FED6D1254F0E7900226C3E /* Coordinate.swift in Sources */,
+				A2C283C12550C0A5001F957A /* URLIconWeather.swift in Sources */,
 				A2FED6AB254DBE6A00226C3E /* URLComponentsService.swift in Sources */,
 				A2FED686254C065B00226C3E /* Constanst.swift in Sources */,
 				A2FED6BD254DCE5800226C3E /* NetworkService.swift in Sources */,
@@ -505,6 +517,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A2C283BA25506AD8001F957A /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.15.7;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A2C283BB25506AD8001F957A /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2C283BA25506AD8001F957A /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A2FED642254BF60E00226C3E /* Project object */;
 }

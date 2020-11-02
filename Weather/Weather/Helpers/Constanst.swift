@@ -13,6 +13,8 @@ enum Title {
 
 enum Text {
     static let searchBarPlaceholder = "Выберите город"
+    static let feels = "Ощущается "
+    static let degrees = "°"
 }
 
 enum Fonts {
