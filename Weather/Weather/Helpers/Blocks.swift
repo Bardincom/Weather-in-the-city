@@ -9,4 +9,4 @@ import Foundation
 import MapKit
 
 typealias ResultBlock<T> = (Result<T, Error>) -> Void
-typealias PlacemarkBlock = (MKPlacemark) -> Void
+//typealias PlacemarkBlock = (MKPlacemark) -> Void

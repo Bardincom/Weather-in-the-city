@@ -18,3 +18,7 @@ enum Text {
 enum Fonts {
     static let labelFont: UIFont = .systemFont(ofSize: 17)
 }
+
+enum Colors {
+    static let buttonColor: UIColor = .systemRed
+}

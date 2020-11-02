@@ -17,11 +17,14 @@ final class WeatherListViewController: UIViewController {
         }
     }
 
-    var searchCompleter = MKLocalSearchCompleter()
-    var searchResults = [MKLocalSearchCompletion]()
-    var citiesInformation = [CityInfo]()
+    // MARK: - Private Property
 
+    private var searchCompleter = MKLocalSearchCompleter()
+    private var searchResults = [MKLocalSearchCompletion]()
     private let searchController = UISearchController(searchResultsController: nil)
+    private var favoriteLocations = [Location]()
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,19 +37,9 @@ final class WeatherListViewController: UIViewController {
         super.viewWillAppear(animated)
         weatherListTableView.reloadData()
     }
-
-    func searchControllerConfiguration() {
-        searchController.searchBar.delegate = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = Title.weatherViewControllerTitle
-        navigationItem.searchController = searchController
-    }
-
-    func searchCompleterConfiguration() {
-        searchCompleter.delegate = self
-        searchCompleter.pointOfInterestFilter = .excludingAll
-    }
 }
+
+// MARK: - TableViewDataSource
 
 extension WeatherListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -54,7 +47,7 @@ extension WeatherListViewController: UITableViewDataSource {
             return searchResults.count
         }
 
-        return citiesInformation.count
+        return favoriteLocations.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,10 +55,10 @@ extension WeatherListViewController: UITableViewDataSource {
 
         if searchController.isActive {
             let result = searchResults[indexPath.row]
-            cell.displayResultSearchCities(result)
+            cell.displayResultSearchLocation(result)
         } else {
-            let city = citiesInformation[indexPath.row]
-            cell.displayFavoriteCity(city)
+            let city = favoriteLocations[indexPath.row]
+            cell.displayFavoriteLocation(city)
         }
 
         return cell
@@ -74,17 +67,19 @@ extension WeatherListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView,
                    commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
-        let city = citiesInformation[indexPath.row]
+        let city = favoriteLocations[indexPath.row]
 
       if editingStyle == .delete {
-        guard let index = citiesInformation.firstIndex(where: { (removeCity) -> Bool in
+        guard let index = favoriteLocations.firstIndex(where: { (removeCity) -> Bool in
             removeCity.name == city.name
         }) else { return }
-        citiesInformation.remove(at: index)
+        favoriteLocations.remove(at: index)
         tableView.deleteRows(at: [indexPath], with: .automatic)
       }
     }
 }
+
+// MARK: - TableViewDelegate
 
 extension WeatherListViewController: UITableViewDelegate {
 
@@ -103,14 +98,14 @@ extension WeatherListViewController: UITableViewDelegate {
             return
         }
 
-        let selectCity = citiesInformation[indexPath.row]
-        cityWeatherViewController.cityInfo = selectCity
+        let selectCity = favoriteLocations[indexPath.row]
+        cityWeatherViewController.locationInfo = selectCity
         cityWeatherViewController.delegate = self
         navigationController?.pushViewController(cityWeatherViewController, animated: true)
     }
-
-
 }
+
+// MARK: - UISearchBarDelegate
 
 extension WeatherListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -118,29 +113,45 @@ extension WeatherListViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - LocalSearchCompleterDelegate
+
 extension WeatherListViewController: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        let results = completer.results.filter { result in
-            guard result.title.contains(",") else { return false }
-            return true
-        }
 
-        searchResults = results
+        searchResults = completer.selectionResult()
         weatherListTableView.reloadData()
     }
 }
 
+// MARK: - CityWeatherDelegate
+
 extension WeatherListViewController: CityWeatherDelegate {
-    func removeFavouritesCity(_ city: CityInfo) {
-        guard let index = citiesInformation.firstIndex(where: { (removeCity) -> Bool in
-            removeCity.name == city.name
+    func removeFavouritesLocation(_ location: Location) {
+        guard let index = favoriteLocations.firstIndex(where: { (removeLocation) -> Bool in
+            removeLocation == location
         }) else { return }
 
-        citiesInformation.remove(at: index)
+        favoriteLocations.remove(at: index)
     }
 
-    func addFavouritesCity(_ city: CityInfo) {
-        citiesInformation.append(city)
+    func addFavouritesLocation(_ completer: Location) {
+        favoriteLocations.append(completer)
+    }
+}
+
+// MARK: - Configuration WeatherListViewController
+
+private extension WeatherListViewController {
+    func searchControllerConfiguration() {
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = Title.weatherViewControllerTitle
+        navigationItem.searchController = searchController
+    }
+
+    func searchCompleterConfiguration() {
+        searchCompleter.delegate = self
+        searchCompleter.pointOfInterestFilter = .excludingAll
     }
 }
 

@@ -23,18 +23,16 @@ final class WeatherListTableViewCell: UITableViewCell {
     }
 
     @IBOutlet var conditionImage: UIImageView!
-//    private let networkService = NetworkService()
 
-
-    func displayFavoriteCity(_ favoriteCity: CityInfo) {
+    func displayFavoriteLocation(_ favoriteLocation: Location) {
         temperature.isHidden = false
         conditionImage.isHidden = false
 
-        city.text = favoriteCity.name
-        temperature.text = String(favoriteCity.actualWeather.temperature)
+        city.text = favoriteLocation.name
+        temperature.text = String(favoriteLocation.actualWeather.temperature)
     }
 
-    func displayResultSearchCities(_ result: MKLocalSearchCompletion) {
+    func displayResultSearchLocation(_ result: MKLocalSearchCompletion) {
         city.text = String(result.title)
         temperature.isHidden = true
         conditionImage.isHidden = true
