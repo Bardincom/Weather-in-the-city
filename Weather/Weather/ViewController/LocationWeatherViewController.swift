@@ -65,7 +65,7 @@ class LocationWeatherViewController: UIViewController {
                         DispatchQueue.main.async {
                             self.temperature.text = String(weather.actualWeather.temperature)
                             self.feelsTemperature.text = String(weather.actualWeather.feelsTemperature)
-                            self.condition.text = String(weather.actualWeather.condition)
+                            self.condition.text = Conditions.init(String(weather.actualWeather.condition))?.description
                         }
 
                     case .failure(let error):
@@ -99,7 +99,7 @@ private extension LocationWeatherViewController {
                     DispatchQueue.main.async {
                         self.temperature.text = String(weather.actualWeather.temperature)
                         self.feelsTemperature.text = String(weather.actualWeather.feelsTemperature)
-                        self.condition.text = String(weather.actualWeather.condition)
+                        self.condition.text = Conditions.init(String(weather.actualWeather.condition))?.description
                     }
 
                 case .failure(let error):
@@ -110,7 +110,7 @@ private extension LocationWeatherViewController {
     }
 
     @objc
-    func addCity() {
+    func addLocation() {
         guard let location = location else {
             removeLocation()
             return
@@ -184,7 +184,7 @@ private extension LocationWeatherViewController {
         favoriteButton = UIBarButtonItem(image: Icon.favorite,
                                          style: .plain,
                                          target: self,
-                                         action: #selector(addCity))
+                                         action: #selector(addLocation))
 
         let backButton = UIBarButtonItem(image: Icon.back,
                                          style: .plain,

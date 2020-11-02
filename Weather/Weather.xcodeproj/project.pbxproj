@@ -29,7 +29,7 @@
 		A2FED6BD254DCE5800226C3E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED6BC254DCE5800226C3E /* NetworkService.swift */; };
 		A2FED6C2254DEC7B00226C3E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED6C1254DEC7B00226C3E /* Location.swift */; };
 		A2FED6C9254DEFD500226C3E /* LocationWeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED6C7254DEFD500226C3E /* LocationWeatherViewController.swift */; };
-		A2FED6CA254DEFD500226C3E /* CityWeatherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2FED6C8254DEFD500226C3E /* CityWeatherViewController.xib */; };
+		A2FED6CA254DEFD500226C3E /* LocationWeatherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2FED6C8254DEFD500226C3E /* LocationWeatherViewController.xib */; };
 		A2FED6CD254EB77500226C3E /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED6CC254EB77400226C3E /* Icons.swift */; };
 		A2FED6D1254F0E7900226C3E /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED6D0254F0E7900226C3E /* Coordinate.swift */; };
 		A2FED6D5254F781100226C3E /* MKLocalSearchCompletion+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED6D4254F781000226C3E /* MKLocalSearchCompletion+Extension.swift */; };
@@ -62,7 +62,7 @@
 		A2FED6BC254DCE5800226C3E /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		A2FED6C1254DEC7B00226C3E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		A2FED6C7254DEFD500226C3E /* LocationWeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationWeatherViewController.swift; sourceTree = "<group>"; };
-		A2FED6C8254DEFD500226C3E /* CityWeatherViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityWeatherViewController.xib; sourceTree = "<group>"; };
+		A2FED6C8254DEFD500226C3E /* LocationWeatherViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationWeatherViewController.xib; sourceTree = "<group>"; };
 		A2FED6CC254EB77400226C3E /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		A2FED6D0254F0E7900226C3E /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		A2FED6D4254F781000226C3E /* MKLocalSearchCompletion+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKLocalSearchCompletion+Extension.swift"; sourceTree = "<group>"; };
@@ -150,7 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				A2FED67D254C021600226C3E /* WeatherListViewController */,
-				A2FED6C6254DEF6800226C3E /* CityWeatherViewController */,
+				A2FED6C6254DEF6800226C3E /* LocationWeatherViewController */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -198,13 +198,13 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		A2FED6C6254DEF6800226C3E /* CityWeatherViewController */ = {
+		A2FED6C6254DEF6800226C3E /* LocationWeatherViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A2FED6C7254DEFD500226C3E /* LocationWeatherViewController.swift */,
-				A2FED6C8254DEFD500226C3E /* CityWeatherViewController.xib */,
+				A2FED6C8254DEFD500226C3E /* LocationWeatherViewController.xib */,
 			);
-			name = CityWeatherViewController;
+			name = LocationWeatherViewController;
 			sourceTree = "<group>";
 		};
 		A2FED6DB255008E600226C3E /* LocationService */ = {
@@ -274,7 +274,7 @@
 			files = (
 				A2FED663254BF64200226C3E /* .gitignore in Resources */,
 				A2FED65A254BF61100226C3E /* LaunchScreen.storyboard in Resources */,
-				A2FED6CA254DEFD500226C3E /* CityWeatherViewController.xib in Resources */,
+				A2FED6CA254DEFD500226C3E /* LocationWeatherViewController.xib in Resources */,
 				A2FED678254C00E800226C3E /* WeatherListViewController.xib in Resources */,
 				A2FED657254BF61100226C3E /* Assets.xcassets in Resources */,
 				A2FED682254C02B300226C3E /* WeatherListTableViewCell.xib in Resources */,

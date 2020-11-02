@@ -13,7 +13,6 @@ struct ActualWeather: Codable {
     var iconWeather: String
     var condition: String
 
-
     enum CodingKeys: String, CodingKey {
         case temperature = "temp"
         case feelsTemperature = "feels_like"
