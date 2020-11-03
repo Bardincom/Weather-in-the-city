@@ -18,7 +18,7 @@ final class WeatherListTableViewCell: UITableViewCell {
     
     @IBOutlet private var temperature: UILabel! {
         willSet {
-            newValue.font = Fonts.labelFont
+            newValue.font = Fonts.degreesFont
         }
     }
 
@@ -34,7 +34,9 @@ final class WeatherListTableViewCell: UITableViewCell {
         temperature.text = String(favoriteLocation.actualWeather.temperature) + Text.degrees
 
         guard let url = urlIcon.preparationURL(favoriteLocation.actualWeather.iconWeather) else { return }
-        conditionImage.kf.setImage(with: url)
+
+        let processor = SVGProcessor(size: CGSize(width: conditionImage.frame.width, height: conditionImage.frame.height))
+        conditionImage.kf.setImage(with: url, options: [.processor(processor)])
     }
 
     func displayResultSearchLocation(_ result: MKLocalSearchCompletion) {

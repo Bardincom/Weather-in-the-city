@@ -11,7 +11,7 @@ public final class LocationStore {
 
     public static let shared: LocationStore = .init()
 
-    /// Список локаций, добавленных пользователем. Добавленные добавленные сохраняются в UserDefaults и доступны после перезагрузки приложения.
+    /// Список локаций, добавленных пользователем. Добавленные локации сохраняются в UserDefaults и доступны после перезагрузки приложения.
     public var locations: [Location] = [] {
         didSet {
             save()
@@ -19,14 +19,32 @@ public final class LocationStore {
     }
 
     private lazy var userDefaults: UserDefaults = .standard
-
     private lazy var decoder: JSONDecoder = .init()
-
     private lazy var encoder: JSONEncoder = .init()
+    private var networkService = NetworkService()
+    private var reloadGroup = DispatchGroup()
 
     // MARK: - Lifecycle
-    public func addLocation(_ location: Location) {
-        save()
+    private func reloadLocations(_ locations: [Location]) {
+        for (index, location) in locations.enumerated() {
+            print(location.name, location.actualWeather.temperature, location.coordinate.latitude)
+
+            let lat = String(location.coordinate.latitude)
+            let lon = String(location.coordinate.longitude)
+            networkService.getRequest().getActualWeather(lat, lon) { (result) in
+                switch result {
+                    case .success(let weather):
+                        DispatchQueue.main.async {
+                            self.locations[index].actualWeather.temperature = weather.actualWeather.temperature
+                            print(weather.coordinate, weather.actualWeather.temperature)
+                            self.locations[index].actualWeather.iconWeather = weather.actualWeather.iconWeather
+                        }
+                    case .failure(_):
+                        break
+                }
+            }
+        }
+
     }
 
     // MARK: - Private
@@ -38,11 +56,13 @@ public final class LocationStore {
 
         do {
             locations = try decoder.decode([Location].self, from: data)
-            print(locations)
+
         }
         catch {
             print("Ошибка декодирования сохранённых локаций", error)
         }
+
+        reloadLocations(locations)
     }
 
     private func save() {

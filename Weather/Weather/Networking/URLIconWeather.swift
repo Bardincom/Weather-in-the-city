@@ -13,7 +13,7 @@ let testIcon = "https://n7.nextpng.com/sticker-png/533/833/sticker-png-weather-f
 
 class URLIconWeather {
     func preparationURL(_ withIcon: String) -> URL? {
-        guard let url = URL(string: testIcon) else {
+        guard let url = URL(string: "https://yastatic.net/weather/i/icons/blueye/color/svg/\(withIcon).svg") else {
             return nil
         }
 

@@ -17,7 +17,11 @@ class LocationWeatherViewController: UIViewController {
 
     // MARK: - IBOutlets
 
-    @IBOutlet private var temperature: UILabel!
+    @IBOutlet private var temperature: UILabel! {
+        willSet {
+            newValue.font = Fonts.degreesFont
+        }
+    }
     @IBOutlet private var feelsTemperature: UILabel!
     @IBOutlet private var condition: UILabel!
     @IBOutlet private var icon: UIImageView!
@@ -134,12 +138,13 @@ private extension LocationWeatherViewController {
                         }
 
                         print(url)
+                        let processor = SVGProcessor(size: CGSize(width: 240, height: 240))
 
                         loadDataGroup.notify(queue: .main) {
                             self.temperature.text = locationTemperature
                             self.feelsTemperature.text = locationFeelsTemperature
                             self.condition.text = locationCondition
-                            self.icon.kf.setImage(with: url)
+                            self.icon.kf.setImage(with: url, options: [.processor(processor)])
                         }
                     }
 

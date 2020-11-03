@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import PocketSVG
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

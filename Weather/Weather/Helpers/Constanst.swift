@@ -19,6 +19,7 @@ enum Text {
 
 enum Fonts {
     static let labelFont: UIFont = .systemFont(ofSize: 17)
+    static let degreesFont: UIFont = .systemFont(ofSize: 25)
 }
 
 enum Colors {
