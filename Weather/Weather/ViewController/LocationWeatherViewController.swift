@@ -133,6 +133,8 @@ private extension LocationWeatherViewController {
                             return
                         }
 
+                        print(url)
+
                         loadDataGroup.notify(queue: .main) {
                             self.temperature.text = locationTemperature
                             self.feelsTemperature.text = locationFeelsTemperature

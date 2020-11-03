@@ -22,7 +22,7 @@ final class WeatherListViewController: UIViewController {
     private var searchCompleter = MKLocalSearchCompleter()
     private var searchResults = [MKLocalSearchCompletion]()
     private let searchController = UISearchController(searchResultsController: nil)
-    private var favoriteLocations = [Location]()
+    private var locationStore = LocationStore.shared
 
     // MARK: - Lifecycle
 
@@ -47,7 +47,7 @@ extension WeatherListViewController: UITableViewDataSource {
             return searchResults.count
         }
 
-        return favoriteLocations.count
+        return locationStore.locations.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,7 +57,7 @@ extension WeatherListViewController: UITableViewDataSource {
             let result = searchResults[indexPath.row]
             cell.displayResultSearchLocation(result)
         } else {
-            let location = favoriteLocations[indexPath.row]
+            let location = locationStore.locations[indexPath.row]
             cell.displayFavoriteLocation(location)
         }
 
@@ -67,15 +67,20 @@ extension WeatherListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView,
                    commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
-        let city = favoriteLocations[indexPath.row]
+
+        let location = locationStore.locations[indexPath.row]
 
       if editingStyle == .delete {
-        guard let index = favoriteLocations.firstIndex(where: { (removeCity) -> Bool in
-            removeCity.name == city.name
+        guard let index = locationStore.locations.firstIndex(where: { (removeLocation) -> Bool in
+            removeLocation == location
         }) else { return }
-        favoriteLocations.remove(at: index)
+        locationStore.locations.remove(at: index)
         tableView.deleteRows(at: [indexPath], with: .automatic)
       }
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        70
     }
 }
 
@@ -98,7 +103,7 @@ extension WeatherListViewController: UITableViewDelegate {
             return
         }
 
-        let selectLocation = favoriteLocations[indexPath.row]
+        let selectLocation = locationStore.locations[indexPath.row]
         cityWeatherViewController.locationInfo = selectLocation
         cityWeatherViewController.delegate = self
         navigationController?.pushViewController(cityWeatherViewController, animated: true)
@@ -127,15 +132,16 @@ extension WeatherListViewController: MKLocalSearchCompleterDelegate {
 
 extension WeatherListViewController: LocationWeatherDelegate {
     func removeFavouritesLocation(_ location: Location) {
-        guard let index = favoriteLocations.firstIndex(where: { (removeLocation) -> Bool in
+        guard let index = locationStore.locations.firstIndex(where: { (removeLocation) -> Bool in
             removeLocation == location
         }) else { return }
 
-        favoriteLocations.remove(at: index)
+        locationStore.locations.remove(at: index)
     }
 
     func addFavouritesLocation(_ completer: Location) {
-        favoriteLocations.append(completer)
+        locationStore.locations.append(completer)
+//        favoriteLocations.append(completer)
     }
 }
 

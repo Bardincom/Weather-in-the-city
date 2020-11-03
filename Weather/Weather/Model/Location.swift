@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Location {
+public struct Location: Codable {
     var name: String
     var actualWeather: ActualWeather
     var coordinate: Coordinate
@@ -15,14 +15,14 @@ struct Location {
 }
 
 extension Location: Hashable {
-    static func == (lhs: Location, rhs: Location) -> Bool {
+    public static func == (lhs: Location, rhs: Location) -> Bool {
         return
             lhs.name == rhs.name
             && lhs.coordinate.latitude == rhs.coordinate.latitude
             && lhs.coordinate.longitude == rhs.coordinate.longitude
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(self.name)
         hasher.combine(self.coordinate.latitude)
         hasher.combine(self.coordinate.longitude)

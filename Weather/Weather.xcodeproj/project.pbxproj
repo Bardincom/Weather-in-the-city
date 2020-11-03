@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A2C283BC25506AD8001F957A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A2C283BB25506AD8001F957A /* Kingfisher */; };
 		A2C283C12550C0A5001F957A /* URLIconWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C283C02550C0A5001F957A /* URLIconWeather.swift */; };
+		A2C283C425514391001F957A /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C283C325514391001F957A /* LocationStore.swift */; };
 		A2FED64E254BF60E00226C3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED64D254BF60E00226C3E /* AppDelegate.swift */; };
 		A2FED657254BF61100226C3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2FED656254BF61100226C3E /* Assets.xcassets */; };
 		A2FED65A254BF61100226C3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2FED658254BF61100226C3E /* LaunchScreen.storyboard */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		A2C283C02550C0A5001F957A /* URLIconWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLIconWeather.swift; sourceTree = "<group>"; };
+		A2C283C325514391001F957A /* LocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStore.swift; sourceTree = "<group>"; };
 		A2FED64A254BF60E00226C3E /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2FED64D254BF60E00226C3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2FED656254BF61100226C3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				A2FED6DD2550092000226C3E /* LocationService.swift */,
+				A2C283C325514391001F957A /* LocationStore.swift */,
 			);
 			path = LocationService;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				A2FED6C9254DEFD500226C3E /* LocationWeatherViewController.swift in Sources */,
 				A2FED681254C02B300226C3E /* WeatherListTableViewCell.swift in Sources */,
 				A2FED6CD254EB77500226C3E /* Icons.swift in Sources */,
+				A2C283C425514391001F957A /* LocationStore.swift in Sources */,
 				A2FED6BA254DCABC00226C3E /* GETService.swift in Sources */,
 				A2FED6C2254DEC7B00226C3E /* Location.swift in Sources */,
 				A2FED69F254DB7D100226C3E /* Weather.swift in Sources */,
