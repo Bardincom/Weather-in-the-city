@@ -6,5 +6,6 @@
 //
 
 import Foundation
+import MapKit
 
 typealias ResultBlock<T> = (Result<T, Error>) -> Void

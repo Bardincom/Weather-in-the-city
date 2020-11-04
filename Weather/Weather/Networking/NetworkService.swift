@@ -11,7 +11,6 @@ final class NetworkService {
 
     private let getService: GETProtocol
 
-
     init(getService: GETProtocol = GETService()) {
         self.getService = getService
     }

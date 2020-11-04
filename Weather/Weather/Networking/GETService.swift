@@ -13,7 +13,6 @@ protocol GETProtocol {
                           completionHandler: @escaping ResultBlock<WeatherModel>)
 }
 
-
 class GETService: GETProtocol {
 
     private let urlService: URLServiceProtocol
@@ -27,7 +26,6 @@ class GETService: GETProtocol {
         self.requestService = requestService
         self.dataProvider = dataProvider
     }
-
 
     func getActualWeather(_ latitude: String,
                           _ longitude: String,
