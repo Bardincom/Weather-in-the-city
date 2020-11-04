@@ -1,6 +1,7 @@
 {
-  "colors" : [
+  "images" : [
     {
+      "filename" : "1024pt_App_Store_1x.png",
       "idiom" : "universal"
     }
   ],

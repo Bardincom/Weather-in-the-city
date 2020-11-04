@@ -6,15 +6,15 @@
 //
 
 import UIKit
+import Kingfisher
+import PocketSVG
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         assembly()
         return true
     }
@@ -26,9 +26,10 @@ private extension AppDelegate {
     func assembly() {
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        let rootViewController = ViewController()
-        window?.rootViewController = rootViewController
+        let rootViewController = WeatherListViewController()
+        rootViewController.title = Title.weatherViewControllerTitle
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 }
-
