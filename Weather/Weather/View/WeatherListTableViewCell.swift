@@ -44,7 +44,4 @@ final class WeatherListTableViewCell: UITableViewCell {
         temperature.isHidden = true
         conditionImage.isHidden = true
     }
-
-
-    
 }

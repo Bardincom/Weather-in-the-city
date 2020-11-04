@@ -35,6 +35,7 @@ struct SVGProcessor: ImageProcessor {
             return nil
         }
     }
+
     func snapshotImage(for view: CALayer) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(view.frame.size, false, UIScreen.main.scale)
         guard let context = UIGraphicsGetCurrentContext() else { return nil }

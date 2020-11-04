@@ -42,7 +42,6 @@ public final class LocationStore {
         }
 
         reloadLocations()
-
     }
 }
 
@@ -101,7 +100,6 @@ extension LocationStore {
             print("Ошибка кодирования локации для сохранения", error)
         }
     }
-
 
     private func updateLocationsWeather() {
         NotificationCenter.default.post(name: .didUpdateWeather, object: nil)

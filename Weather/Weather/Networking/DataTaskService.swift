@@ -22,9 +22,6 @@ class DataTaskService: DataTaskServiceProtocol {
         let dataTask = sharedSession.dataTask(with: request) { [weak self] (data, response, error) in
             guard let self = self else { return }
 
-//            guard let response = response as? HTTPURLResponse else { return }
-//            print(response.statusCode)
-
             if let error = error {
                 print("Возникла ошибка: \(error.localizedDescription)")
             }

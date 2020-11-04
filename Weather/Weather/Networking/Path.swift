@@ -18,7 +18,8 @@ enum QueryItems {
     static let longitude = "lon"
 }
 
+// MARK: - You must enter the Yandex API key
 enum APIKey {
-    static let key = "26b0d075-23ef-4f97-9efd-cfab938b885c"
+    static let key = ""
 }
 
