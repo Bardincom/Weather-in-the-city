@@ -13,9 +13,7 @@ public final class LocationStore {
 
     public var locations: [Location] = [] {
         didSet {
-            DispatchQueue.main.async {
-                self.save()
-            }
+            self.save()
         }
     }
 
@@ -25,11 +23,41 @@ public final class LocationStore {
     private var networkService = NetworkService()
     private var updateWeatherLocationGroup = DispatchGroup()
 
-    // MARK: - Lifecycle
-    func reloadLocations(_ locations: [Location]) {
+    // MARK: - Private
+
+    private init() {
+
+        guard let data = userDefaults.data(forKey: "locations") else {
+            locations.append(contentsOf: Locations.locations)
+            self.reloadLocations()
+            return
+        }
+
+        do {
+            locations = try decoder.decode([Location].self, from: data)
+
+        }
+        catch {
+            print("Ошибка декодирования сохранённых локаций", error)
+        }
+
+        reloadLocations()
+
+    }
+}
+
+// MARK: - Methods
+
+extension LocationStore {
+
+    func getCountLocations() -> Int {
+        locations.count
+    }
+
+    func reloadLocations() {
         DispatchQueue.global(qos: .userInteractive).async {
 
-            for (index, location) in locations.enumerated() {
+            for (index, location) in self.locations.enumerated() {
                 self.updateWeatherLocationGroup.enter()
 
                 let lat = String(location.coordinate.latitude)
@@ -41,11 +69,10 @@ public final class LocationStore {
 
                         switch result {
                             case .success(let weather):
-                                    self.locations[index].actualWeather.temperature = weather.actualWeather.temperature
-                                    print(weather.coordinate, weather.actualWeather.temperature)
-                                    self.locations[index].actualWeather.iconWeather = weather.actualWeather.iconWeather
+                                self.locations[index].actualWeather.temperature = weather.actualWeather.temperature
+                                self.locations[index].actualWeather.iconWeather = weather.actualWeather.iconWeather
 
-                                    self.updateWeatherLocationGroup.leave()
+                                self.updateWeatherLocationGroup.leave()
 
                             case .failure(_):
                                 break
@@ -58,31 +85,9 @@ public final class LocationStore {
 
             DispatchQueue.main.async {
                 self.updateLocationsWeather()
-                print("UI updated")
+//                print("UI updated")
             }
         }
-    }
-
-    // MARK: - Private
-
-    private init() {
-
-        guard let data = userDefaults.data(forKey: "locations") else {
-            locations.append(contentsOf: Locations.locations)
-            self.reloadLocations(self.locations)
-            return
-        }
-
-        do {
-            locations = try decoder.decode([Location].self, from: data)
-
-        }
-        catch {
-            print("Ошибка декодирования сохранённых локаций", error)
-        }
-
-        reloadLocations(locations)
-
     }
 
     private func save() {
@@ -97,12 +102,10 @@ public final class LocationStore {
             print("Ошибка кодирования локации для сохранения", error)
         }
     }
-}
 
-extension LocationStore {
-    func updateLocationsWeather() {
+
+    private func updateLocationsWeather() {
         NotificationCenter.default.post(name: .didUpdateWeather, object: nil)
-        print("NotificationCenter")
     }
 }
 

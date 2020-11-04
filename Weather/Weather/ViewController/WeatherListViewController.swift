@@ -23,6 +23,7 @@ final class WeatherListViewController: UIViewController {
     private var searchResults = [MKLocalSearchCompletion]()
     private let searchController = UISearchController(searchResultsController: nil)
     private var locationStore = LocationStore.shared
+    private var refreshControl: UIRefreshControl?
 
     // MARK: - Lifecycle
 
@@ -31,8 +32,8 @@ final class WeatherListViewController: UIViewController {
 
         searchCompleterConfiguration()
         searchControllerConfiguration()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDidUpdateWeather), name: .didUpdateWeather, object: nil)
+        configureRefreshControl()
+        addObserver()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +50,7 @@ extension WeatherListViewController: UITableViewDataSource {
             return searchResults.count
         }
 
-        return locationStore.locations.count
+        return locationStore.getCountLocations()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -161,9 +162,31 @@ private extension WeatherListViewController {
         searchCompleter.pointOfInterestFilter = .excludingAll
     }
 
+    func configureRefreshControl () {
+
+        weatherListTableView.refreshControl = UIRefreshControl()
+        weatherListTableView.refreshControl?.addTarget(
+            self,
+            action: #selector(refresh),
+            for: .valueChanged)
+    }
+
+    func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDidUpdateWeather), name: .didUpdateWeather, object: nil)
+    }
+
     @objc
     func handleDidUpdateWeather() {
         weatherListTableView.reloadData()
     }
-}
 
+    @objc
+    func refresh() {
+
+        locationStore.reloadLocations()
+
+        DispatchQueue.main.async {
+            self.weatherListTableView.refreshControl?.endRefreshing()
+        }
+    }
+}

@@ -60,45 +60,9 @@ class LocationWeatherViewController: UIViewController {
         title = location.setShortNamePlace()
 
         location.getLocation { location in
-
             let latitude = String(location.coordinate.latitude)
             let longitude = String(location.coordinate.longitude)
-
-            self.networkService.getRequest().getActualWeather(latitude, longitude) { [weak self] result in
-                guard let self = self else { return }
-
-                let loadDataGroup = DispatchGroup()
-
-                switch result {
-                    case .success(let weather):
-
-                        DispatchQueue.global(qos: .userInitiated).async {
-                            loadDataGroup.enter()
-
-                            let locationTemperature = String(weather.actualWeather.temperature) + Text.degrees
-                            let locationFeelsTemperature = Text.feels + String(weather.actualWeather.feelsTemperature) + Text.degrees
-                            let locationCondition = Conditions.init(String(weather.actualWeather.condition))?.description
-                            let icon = weather.actualWeather.iconWeather
-
-                            loadDataGroup.leave()
-
-                            guard let url = self.urlIcon.preparationURL(icon) else {
-                                return
-                            }
-
-                            loadDataGroup.notify(queue: .main) {
-                                self.temperature.text = locationTemperature
-                                self.feelsTemperature.text = locationFeelsTemperature
-                                self.condition.text = locationCondition
-                                self.icon.kf.setImage(with: url, options: [.processor(self.processor)])
-                            }
-                        }
-
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        break
-                }
-            }
+            self.getActualWeatherByCoordinates(latitude, longitude)
         }
     }
 }
@@ -107,15 +71,7 @@ class LocationWeatherViewController: UIViewController {
 
 private extension LocationWeatherViewController {
 
-    func setupCityWeather() {
-
-        guard let cityInfo = locationInfo else { return }
-
-        isAddedCity = cityInfo.isFavorite
-        setupFavoriteButton()
-
-        let latitude = String(cityInfo.coordinate.latitude)
-        let longitude = String(cityInfo.coordinate.longitude)
+    func getActualWeatherByCoordinates(_ latitude: String, _ longitude: String) {
         networkService.getRequest().getActualWeather(latitude, longitude) { [weak self] result in
 
             guard let self = self else { return }
@@ -138,8 +94,6 @@ private extension LocationWeatherViewController {
                             return
                         }
 
-                        print(url)
-
                         loadDataGroup.notify(queue: .main) {
                             self.temperature.text = locationTemperature
                             self.feelsTemperature.text = locationFeelsTemperature
@@ -155,55 +109,16 @@ private extension LocationWeatherViewController {
         }
     }
 
-    @objc
-    func addLocation() {
-        guard let location = location else {
-            removeLocation()
-            return
-        }
+    func setupCityWeather() {
 
-        isAddedCity = !isAddedCity
+        guard let cityInfo = locationInfo else { return }
 
+        isAddedCity = cityInfo.isFavorite
         setupFavoriteButton()
 
-        let locationName = location.setShortNamePlace()
-
-        location.getLocation { (location) in
-            let latitude = String(location.coordinate.latitude)
-            let longitude = String(location.coordinate.longitude)
-
-            self.networkService.getRequest().getActualWeather(latitude, longitude) { [weak self] (result) in
-                guard
-                    let self = self,
-                    let delegate = self.delegate
-                else {
-                    return
-                }
-
-                switch result {
-                    case .success(let weather):
-
-                        let location = self.locationService.createLocation(locationName,
-                                                                           weather,
-                                                                           location)
-
-                        if self.isAddedCity {
-                            delegate.addFavouritesLocation(location)
-                        } else {
-                            delegate.removeFavouritesLocation(location)
-                        }
-
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        break
-                }
-            }
-        }
-    }
-
-    @objc
-    func popViewController() {
-        navigationController?.popViewController(animated: true)
+        let latitude = String(cityInfo.coordinate.latitude)
+        let longitude = String(cityInfo.coordinate.longitude)
+        getActualWeatherByCoordinates(latitude, longitude)
     }
 
     func setupFavoriteButton() {
@@ -245,4 +160,56 @@ private extension LocationWeatherViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
     }
+
+    // TODO: Исключить дублирование городов
+        @objc
+        func addLocation() {
+            guard let location = location else {
+                removeLocation()
+                return
+            }
+
+            isAddedCity = !isAddedCity
+
+            setupFavoriteButton()
+
+            let locationName = location.setShortNamePlace()
+
+            location.getLocation { (location) in
+                let latitude = String(location.coordinate.latitude)
+                let longitude = String(location.coordinate.longitude)
+
+                self.networkService.getRequest().getActualWeather(latitude, longitude) { [weak self] (result) in
+                    guard
+                        let self = self,
+                        let delegate = self.delegate
+                    else {
+                        return
+                    }
+
+                    switch result {
+                        case .success(let weather):
+
+                            let location = self.locationService.createLocation(locationName,
+                                                                               weather,
+                                                                               location)
+
+                            if self.isAddedCity {
+                                delegate.addFavouritesLocation(location)
+                            } else {
+                                delegate.removeFavouritesLocation(location)
+                            }
+
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            break
+                    }
+                }
+            }
+        }
+
+        @objc
+        func popViewController() {
+            navigationController?.popViewController(animated: true)
+        }
 }
