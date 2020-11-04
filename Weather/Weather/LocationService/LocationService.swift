@@ -14,7 +14,7 @@ protocol LocationServiceProtocol {
                         _ locationCoordinate: MKPlacemark ) -> Location
 }
 
-class LocationService: LocationServiceProtocol {
+final class LocationService: LocationServiceProtocol {
 
     func createLocation(_ locationName: String,
                         _ weather: WeatherModel,

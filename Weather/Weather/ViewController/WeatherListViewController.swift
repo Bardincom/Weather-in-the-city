@@ -131,22 +131,6 @@ extension WeatherListViewController: MKLocalSearchCompleterDelegate {
     }
 }
 
-// MARK: - LocationWeatherDelegate
-
-extension WeatherListViewController: LocationWeatherDelegate {
-    func removeFavouritesLocation(_ location: Location) {
-        guard let index = locationStore.locations.firstIndex(where: { (removeLocation) -> Bool in
-            removeLocation == location
-        }) else { return }
-
-        locationStore.locations.remove(at: index)
-    }
-
-    func addFavouritesLocation(_ completer: Location) {
-        locationStore.locations.append(completer)
-    }
-}
-
 // MARK: - Configuration WeatherListViewController
 
 private extension WeatherListViewController {
@@ -188,5 +172,27 @@ private extension WeatherListViewController {
         DispatchQueue.main.async {
             self.weatherListTableView.refreshControl?.endRefreshing()
         }
+    }
+}
+
+// MARK: - LocationWeatherDelegate
+
+extension WeatherListViewController: LocationWeatherDelegate {
+    func removeFavouritesLocation(_ location: Location) {
+        guard let index = locationStore.locations.firstIndex(where: { (removeLocation) -> Bool in
+            removeLocation == location
+        }) else { return }
+
+        locationStore.locations.remove(at: index)
+    }
+
+    func addFavouritesLocation(_ location: Location) {
+        guard !locationStore.locations.contains(location) else {
+            Alert.showAlert(self, Text.alertMessage) {
+                self.removeFavouritesLocation(location)
+            }
+            return
+        }
+        locationStore.locations.append(location)
     }
 }

@@ -13,7 +13,7 @@ protocol LocationWeatherDelegate: class {
     func removeFavouritesLocation(_ city: Location)
 }
 
-class LocationWeatherViewController: UIViewController {
+final class LocationWeatherViewController: UIViewController {
 
     // MARK: - IBOutlets
 
@@ -31,6 +31,7 @@ class LocationWeatherViewController: UIViewController {
     private var favoriteButton: UIBarButtonItem!
     private let networkService = NetworkService()
     private let locationService = LocationService()
+    private var locationStore = LocationStore.shared
     private let urlIcon = URLIconWeather()
     private var isAddedCity: Bool = false
     lazy var processor = SVGProcessor(size: CGSize(width: 70, height: 70))

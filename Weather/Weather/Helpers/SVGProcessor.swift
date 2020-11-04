@@ -12,23 +12,18 @@ import PocketSVG
 
 struct SVGProcessor: ImageProcessor {
 
-    // `identifier` should be the same for processors with the same properties/functionality
-    // It will be used when storing and retrieving the image to/from cache.
     let identifier = "svgprocessor"
     var size: CGSize!
     init(size: CGSize) {
         self.size = size
     }
     // Convert input data/image to target image and return it.
-    func process(item: ImageProcessItem, options: KingfisherParsedOptionsInfo) -> Image? {
+    func process(item: ImageProcessItem, options: KingfisherParsedOptionsInfo) -> KFCrossPlatformImage? {
         switch item {
         case .image(let image):
-//            print("already an image")
             return image
         case .data(let data):
-//            print("svg string")
             if let svgString = String(data: data, encoding: .utf8){
-                //let layer = SVGLayer(
                 let path = SVGBezierPath.paths(fromSVGString: svgString)
                 let layer = SVGLayer()
                 layer.paths = path

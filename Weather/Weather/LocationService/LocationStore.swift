@@ -85,7 +85,6 @@ extension LocationStore {
 
             DispatchQueue.main.async {
                 self.updateLocationsWeather()
-//                print("UI updated")
             }
         }
     }

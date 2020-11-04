@@ -14,6 +14,7 @@
 		A2C283DB2551EB3D001F957A /* SVGProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C283DA2551EB3D001F957A /* SVGProcessor.swift */; };
 		A2C283DF2552110E001F957A /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C283DE2552110E001F957A /* Locations.swift */; };
 		A2C283E52552A602001F957A /* NotificationName+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C283E42552A602001F957A /* NotificationName+Extension.swift */; };
+		A2C283EA2552EDCF001F957A /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C283E92552EDCF001F957A /* Alert.swift */; };
 		A2FED64E254BF60E00226C3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FED64D254BF60E00226C3E /* AppDelegate.swift */; };
 		A2FED657254BF61100226C3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2FED656254BF61100226C3E /* Assets.xcassets */; };
 		A2FED65A254BF61100226C3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2FED658254BF61100226C3E /* LaunchScreen.storyboard */; };
@@ -50,6 +51,7 @@
 		A2C283DA2551EB3D001F957A /* SVGProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGProcessor.swift; sourceTree = "<group>"; };
 		A2C283DE2552110E001F957A /* Locations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
 		A2C283E42552A602001F957A /* NotificationName+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+Extension.swift"; sourceTree = "<group>"; };
+		A2C283E92552EDCF001F957A /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		A2FED64A254BF60E00226C3E /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2FED64D254BF60E00226C3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2FED656254BF61100226C3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -148,6 +150,8 @@
 				A2FED685254C065B00226C3E /* Constanst.swift */,
 				A2FED6B6254DC47800226C3E /* Blocks.swift */,
 				A2FED6CC254EB77400226C3E /* Icons.swift */,
+				A2C283DA2551EB3D001F957A /* SVGProcessor.swift */,
+				A2C283E92552EDCF001F957A /* Alert.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -236,7 +240,6 @@
 			children = (
 				A2FED6DD2550092000226C3E /* LocationService.swift */,
 				A2C283C325514391001F957A /* LocationStore.swift */,
-				A2C283DA2551EB3D001F957A /* SVGProcessor.swift */,
 				A2C283DE2552110E001F957A /* Locations.swift */,
 			);
 			path = LocationService;
@@ -329,6 +332,7 @@
 				A2FED6B4254DC31100226C3E /* DataTaskService.swift in Sources */,
 				A2C283DF2552110E001F957A /* Locations.swift in Sources */,
 				A2C283E52552A602001F957A /* NotificationName+Extension.swift in Sources */,
+				A2C283EA2552EDCF001F957A /* Alert.swift in Sources */,
 				A2FED6A7254DBBDF00226C3E /* Path.swift in Sources */,
 				A2FED6B1254DC13700226C3E /* RequestService.swift in Sources */,
 				A2FED6D5254F781100226C3E /* MKLocalSearchCompletion+Extension.swift in Sources */,

@@ -15,6 +15,7 @@ enum Text {
     static let searchBarPlaceholder = "Выберите город"
     static let feels = "Ощущается "
     static let degrees = "°"
+    static let alertMessage = "Эта локация уже в списке. Удалить из списка?"
 }
 
 enum Fonts {
@@ -24,6 +25,11 @@ enum Fonts {
 
 enum Colors {
     static let buttonColor: UIColor = .systemRed
+}
+
+enum ButtonsName {
+    static let ok = "Оставить"
+    static let delete = "Удалить"
 }
 
 enum Conditions: String, CustomStringConvertible {
