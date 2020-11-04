@@ -11,10 +11,11 @@ public final class LocationStore {
 
     public static let shared: LocationStore = .init()
 
-    /// Список локаций, добавленных пользователем. Добавленные локации сохраняются в UserDefaults и доступны после перезагрузки приложения.
     public var locations: [Location] = [] {
         didSet {
-            save()
+            DispatchQueue.main.async {
+                self.save()
+            }
         }
     }
 
@@ -22,35 +23,53 @@ public final class LocationStore {
     private lazy var decoder: JSONDecoder = .init()
     private lazy var encoder: JSONEncoder = .init()
     private var networkService = NetworkService()
-    private var reloadGroup = DispatchGroup()
+    private var updateWeatherLocationGroup = DispatchGroup()
 
     // MARK: - Lifecycle
-    private func reloadLocations(_ locations: [Location]) {
-        for (index, location) in locations.enumerated() {
-            print(location.name, location.actualWeather.temperature, location.coordinate.latitude)
+    func reloadLocations(_ locations: [Location]) {
+        DispatchQueue.global(qos: .userInteractive).async {
 
-            let lat = String(location.coordinate.latitude)
-            let lon = String(location.coordinate.longitude)
-            networkService.getRequest().getActualWeather(lat, lon) { (result) in
-                switch result {
-                    case .success(let weather):
-                        DispatchQueue.main.async {
-                            self.locations[index].actualWeather.temperature = weather.actualWeather.temperature
-                            print(weather.coordinate, weather.actualWeather.temperature)
-                            self.locations[index].actualWeather.iconWeather = weather.actualWeather.iconWeather
+            for (index, location) in locations.enumerated() {
+                self.updateWeatherLocationGroup.enter()
+
+                let lat = String(location.coordinate.latitude)
+                let lon = String(location.coordinate.longitude)
+                DispatchQueue.global(qos: .userInitiated).async {
+
+                    self.networkService.getRequest().getActualWeather(lat, lon) { [weak self] (result) in
+                        guard let self = self else { return }
+
+                        switch result {
+                            case .success(let weather):
+                                    self.locations[index].actualWeather.temperature = weather.actualWeather.temperature
+                                    print(weather.coordinate, weather.actualWeather.temperature)
+                                    self.locations[index].actualWeather.iconWeather = weather.actualWeather.iconWeather
+
+                                    self.updateWeatherLocationGroup.leave()
+
+                            case .failure(_):
+                                break
                         }
-                    case .failure(_):
-                        break
+                    }
                 }
             }
-        }
 
+            self.updateWeatherLocationGroup.wait()
+
+            DispatchQueue.main.async {
+                self.updateLocationsWeather()
+                print("UI updated")
+            }
+        }
     }
 
     // MARK: - Private
 
     private init() {
+
         guard let data = userDefaults.data(forKey: "locations") else {
+            locations.append(contentsOf: Locations.locations)
+            self.reloadLocations(self.locations)
             return
         }
 
@@ -63,6 +82,7 @@ public final class LocationStore {
         }
 
         reloadLocations(locations)
+
     }
 
     private func save() {
@@ -76,6 +96,13 @@ public final class LocationStore {
         catch {
             print("Ошибка кодирования локации для сохранения", error)
         }
+    }
+}
+
+extension LocationStore {
+    func updateLocationsWeather() {
+        NotificationCenter.default.post(name: .didUpdateWeather, object: nil)
+        print("NotificationCenter")
     }
 }
 

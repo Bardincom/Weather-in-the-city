@@ -31,6 +31,8 @@ final class WeatherListViewController: UIViewController {
 
         searchCompleterConfiguration()
         searchControllerConfiguration()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDidUpdateWeather), name: .didUpdateWeather, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -141,7 +143,6 @@ extension WeatherListViewController: LocationWeatherDelegate {
 
     func addFavouritesLocation(_ completer: Location) {
         locationStore.locations.append(completer)
-//        favoriteLocations.append(completer)
     }
 }
 
@@ -158,6 +159,11 @@ private extension WeatherListViewController {
     func searchCompleterConfiguration() {
         searchCompleter.delegate = self
         searchCompleter.pointOfInterestFilter = .excludingAll
+    }
+
+    @objc
+    func handleDidUpdateWeather() {
+        weatherListTableView.reloadData()
     }
 }
 

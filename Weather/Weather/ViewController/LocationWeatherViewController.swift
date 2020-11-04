@@ -33,6 +33,7 @@ class LocationWeatherViewController: UIViewController {
     private let locationService = LocationService()
     private let urlIcon = URLIconWeather()
     private var isAddedCity: Bool = false
+    lazy var processor = SVGProcessor(size: CGSize(width: 70, height: 70))
 
     // MARK: - Public Properties
 
@@ -89,7 +90,7 @@ class LocationWeatherViewController: UIViewController {
                                 self.temperature.text = locationTemperature
                                 self.feelsTemperature.text = locationFeelsTemperature
                                 self.condition.text = locationCondition
-                                self.icon.kf.setImage(with: url)
+                                self.icon.kf.setImage(with: url, options: [.processor(self.processor)])
                             }
                         }
 
@@ -138,13 +139,12 @@ private extension LocationWeatherViewController {
                         }
 
                         print(url)
-                        let processor = SVGProcessor(size: CGSize(width: 240, height: 240))
 
                         loadDataGroup.notify(queue: .main) {
                             self.temperature.text = locationTemperature
                             self.feelsTemperature.text = locationFeelsTemperature
                             self.condition.text = locationCondition
-                            self.icon.kf.setImage(with: url, options: [.processor(processor)])
+                            self.icon.kf.setImage(with: url, options: [.processor(self.processor)])
                         }
                     }
 
